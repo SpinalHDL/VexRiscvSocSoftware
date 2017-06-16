@@ -1,0 +1,12 @@
+*.o
+*.elf
+*.hex
+*.bin
+*.asm
+*.map
+*.v
+*~
+
+.cproject
+.project
+*.xml
