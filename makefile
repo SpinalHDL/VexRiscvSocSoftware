@@ -1,3 +1,3 @@
 include resources/recursive.mk
 
-SUBDIRS := tests
+SUBDIRS := projects

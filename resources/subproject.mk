@@ -1,7 +1,7 @@
 
 
 ifeq ($(DEBUG),yes)
-	CFLAGS +=-g -O0 
+	CFLAGS +=-g3 -Og 
 endif
 
 ifeq ($(DEBUG),no)
