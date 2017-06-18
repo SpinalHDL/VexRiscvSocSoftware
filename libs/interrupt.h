@@ -9,7 +9,7 @@ typedef struct
   volatile uint32_t MASKS;
 } InterruptCtrl_Reg;
 
-void interruptCtrl_init(InterruptCtrl_Reg* reg){
+static void interruptCtrl_init(InterruptCtrl_Reg* reg){
 	reg->MASKS = 0;
 	reg->PENDINGS = 0xFFFFFFFF;
 }

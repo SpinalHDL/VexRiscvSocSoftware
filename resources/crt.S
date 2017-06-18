@@ -1,25 +1,15 @@
-.macro retirq
-custom0 0,0,0,0
-.endm
-
-.macro readtIrq rd
-custom0 \rd,0,0,1
-.endm
-
-.macro writetIrqMask rs
-custom0 0,\rs,0,2
-.endm
-
-.macro readtIrqMask rd
-custom0 \rd,0,0,3
-.endm
-
+  j _start
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
 
 .global  trap_entry
 trap_entry:
-  nop
   addi sp,sp,-128
-
   sw gp,   0*4(sp)
   sw x1,   1*4(sp)
   sw x2,   2*4(sp)
@@ -52,13 +42,7 @@ trap_entry:
   sw x29, 29*4(sp)
   sw x30, 30*4(sp)
   sw x31, 31*4(sp)
-  nop
-  readtIrq a0
-  jal ra, irqCpp
-  nop
-  nop
-  nop
-
+  call irq
   lw x1,   1*4(sp)
   lw x3,   3*4(sp)
   lw x4,   4*4(sp)
@@ -90,17 +74,24 @@ trap_entry:
   lw x30, 30*4(sp)
   lw x31, 31*4(sp)
   addi sp,sp,128
-  retirq
-  nop
+  mret
   .text
 
-  .align 9
+
   .globl _start
 _start:
-  li  x10,0x00
-  writetIrqMask x10
 
   la sp, _stack_start
+
+test_init:
+  li a0, 20
+test_loop:
+  nop
+  nop
+  nop
+  addi a0, a0, -1
+  bne a0,x0,test_loop
+test_done:
 
 
 bss_init:
@@ -113,7 +104,7 @@ bss_loop:
   j bss_loop
 bss_done:
 
-
+/*
 data_init:
   la a0, _sdata
   la a1, _edata
@@ -125,7 +116,7 @@ data_loop:
   add a2,a2,4
   add a0,a0,4
   j data_loop
-data_done:
+data_done:*/
 
 ctors_init:
   la a0, _ctors_start
@@ -143,8 +134,12 @@ ctors_done:
   addi sp,sp,4
 
 
-  jal ra, main
+  li a0, 0x008
+  csrw mstatus,a0
+  li a0, 0x080
+  csrw mie,a0
 
+  call main
 infinitLoop:
   j infinitLoop
 

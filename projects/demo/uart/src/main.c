@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include <briey.h>
-#include <uart.h>
 
 int main() {
 	Uart_Config uartConfig;

@@ -9,7 +9,7 @@ typedef struct
   volatile uint32_t LIMIT;
 } Prescaler_Reg;
 
-void prescaler_init(Prescaler_Reg* reg){
+static void prescaler_init(Prescaler_Reg* reg){
 
 }
 

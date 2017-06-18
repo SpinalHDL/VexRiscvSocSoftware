@@ -23,10 +23,11 @@ LDFLAGS += -e_start  -nostartfiles -T $(LDSCRIPT) -Wl,-Map,$(OBJDIR)/$(PROJ_NAME
 LDFLAGS += $(RISCV_CLIB)/libc.a $(RISCV_CLIB)/libnosys.a
 
 OBJDIR = build
-OBJS :=  $(SRCS)
+OBJS := $(SRCS)
 OBJS := $(OBJS:.c=.o)
 OBJS := $(OBJS:.cpp=.o)
 OBJS := $(OBJS:.S=.o)
+OBJS := $(OBJS:..=miaou)
 OBJS := $(addprefix $(OBJDIR)/,$(OBJS))
 
 

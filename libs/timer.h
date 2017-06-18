@@ -11,7 +11,7 @@ typedef struct
   volatile uint32_t VALUE;
 } Timer_Reg;
 
-void timer_init(Timer_Reg *reg){
+static void timer_init(Timer_Reg *reg){
 	reg->CLEARS_TICKS  = 0;
 	reg->VALUE = 0;
 }
