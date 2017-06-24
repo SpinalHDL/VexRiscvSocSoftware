@@ -2,9 +2,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-#define TEST_COM_BASE ((volatile uint32_t*)(0xF00FFF00))
-#include "testStdIo.h"
+#include <uartStdIo.h>
 
 
 #ifdef __cplusplus
@@ -28,6 +26,7 @@ int main() {
 
 	TIMER_A->LIMIT = ~0;
 	TIMER_A->CLEARS_TICKS = 0x00010001;
+
 	main2();
 }
 
