@@ -3,6 +3,10 @@
 #include <uartStdIo.h>
 #include <stdio.h>
 
+double miaou(double a, double b){
+	return a + b;
+}
+
 int main() {
 	Uart_Config uartConfig;
 	uartConfig.dataLength = 8;
@@ -14,10 +18,10 @@ int main() {
 	volatile float Dhrystones_Per_Second = 1.0f;
     printf ("%6.1f \n", Dhrystones_Per_Second);
 
-	volatile float a = 1.0, b = 2.0;
+	volatile double a = 1.0, b = 2.0;
 	while(1){
 		printf ("%6.1f \n", a);
-		a *= 1.1;
+		a = miaou(a,0.1);
 	}
 }
 

@@ -86,7 +86,7 @@ trap_entry:
 
   .globl _start
 _start:
-  la sp, _stack_start + 4
+  la sp, _stack_start
 
 test_init:
   li a0, 20
