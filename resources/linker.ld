@@ -116,10 +116,10 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
   
   ._stack (NOLOAD):
   {
-    . = ALIGN(4);
+    . = ALIGN(16);
     PROVIDE (_stack_end = .);
     . = . + _stack_size;
-    . = ALIGN(4);
+    . = ALIGN(16);
     PROVIDE (_stack_start = .);
   } > onChipRam
 
