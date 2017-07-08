@@ -39,6 +39,17 @@ const Vga_Timing vga_simRes = {
     .vColorEnd 	 = 40
 };
 
+const Vga_Timing vga_simRes_h160_v120 = {
+	.hSyncStart  = 8,
+	.hSyncEnd    = 24+160,
+	.hColorStart = 16,
+	.hColorEnd   = 16+160,
+	.vSyncStart  = 2,
+	.vSyncEnd 	 = 10+120,
+	.vColorStart = 6,
+	.vColorEnd 	 = 6+120
+};
+
 typedef struct
 {
   volatile uint32_t  STATUS;
