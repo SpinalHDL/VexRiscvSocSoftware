@@ -12,13 +12,14 @@
 #include "prescaler.h"
 #include "interrupt.h"
 #include "uart.h"
+#include "vga.h"
 
 #define CORE_HZ 50000000
 
 #define GPIO_A_BASE    ((uint32_t*)(0xF0000000))
 #define GPIO_B_BASE    ((uint32_t*)(0xF0001000))
 #define UART      ((Uart_Reg*)(0xF0010000))
-#define VGA_BASE       ((uint32_t*)(0xF0030000))
+#define VGA_BASE       ((Vga_Reg*)(0xF0030000))
 
 
 #define TIMER_PRESCALER ((Prescaler_Reg*)0xF0020000)
