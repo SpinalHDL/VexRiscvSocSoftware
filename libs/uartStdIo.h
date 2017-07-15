@@ -1,3 +1,7 @@
+#ifndef UART_STD_IO_H_
+#define UART_STD_IO_H_
+
+
 #include <briey.h>
 
 #ifdef __cplusplus
@@ -49,6 +53,7 @@ int write(int fd, const void *buffer, unsigned int count) {
 #endif
 
 
+#endif
 
 
 
