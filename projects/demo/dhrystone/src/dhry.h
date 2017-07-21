@@ -352,7 +352,7 @@
 #endif
                 /* Use times(2) time function unless    */
                 /* explicitly defined otherwise         */
-
+#import <briey.h>
 
 #ifdef MSC_CLOCK
 #undef HZ

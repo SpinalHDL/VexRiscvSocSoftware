@@ -17,7 +17,7 @@ typedef struct {
 	uint32_t vColorStart,vColorEnd;
 }Vga_Timing;
 
-const Vga_Timing vga_h640_v480_r60 = {
+static const Vga_Timing vga_h640_v480_r60 = {
     .hSyncStart  = 96,
     .hSyncEnd    = 800,
     .hColorStart = 96 + 16,
@@ -28,7 +28,7 @@ const Vga_Timing vga_h640_v480_r60 = {
     .vColorEnd 	 = 525 - 33
 };
 
-const Vga_Timing vga_simRes = {
+static const Vga_Timing vga_simRes = {
     .hSyncStart  = 8,
     .hSyncEnd    = 70,
     .hColorStart = 16,
@@ -39,7 +39,7 @@ const Vga_Timing vga_simRes = {
     .vColorEnd 	 = 40
 };
 
-const Vga_Timing vga_simRes_h160_v120 = {
+static const Vga_Timing vga_simRes_h160_v120 = {
 	.hSyncStart  = 8,
 	.hSyncEnd    = 24+160,
 	.hColorStart = 16,
@@ -59,15 +59,15 @@ typedef struct
   volatile Vga_Timing TIMING;
 } Vga_Reg;
 
-uint32_t vga_isBusy(Vga_Reg *reg){
+static uint32_t vga_isBusy(Vga_Reg *reg){
 	return (reg->STATUS & 2) != 0;
 }
 
-void vga_run(Vga_Reg *reg){
+static void vga_run(Vga_Reg *reg){
 	reg->STATUS  = 1;
 }
 
-void vga_stop(Vga_Reg *reg){
+static void vga_stop(Vga_Reg *reg){
 	reg->STATUS  = 0;
 	while(vga_isBusy(reg));
 }

@@ -5,11 +5,11 @@
 
 #include <briey.h>
 
-//#define RES_X 640
-//#define RES_Y 480
+#define RES_X 640
+#define RES_Y 480
 
-#define RES_X 160
-#define RES_Y 120
+//#define RES_X 160
+//#define RES_Y 120
 
 //#define RES_X 48
 //#define RES_Y 32
@@ -28,7 +28,7 @@ int main() {
 
 
     vga_stop(VGA_BASE);
-    VGA_BASE->TIMING = vga_simRes_h160_v120;  // vga_simRes   vga_h640_v480_r60 vga_simRes_h160_v120
+    VGA_BASE->TIMING = vga_h640_v480_r60;  // vga_simRes   vga_h640_v480_r60 vga_simRes_h160_v120
     VGA_BASE->FRAME_SIZE = RES_X*RES_Y*2-1;
     VGA_BASE->FRAME_BASE = (uint32_t)vgaFramebuffer;
     vga_run(VGA_BASE);
