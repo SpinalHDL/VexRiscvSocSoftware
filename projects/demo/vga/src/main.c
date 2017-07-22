@@ -33,17 +33,17 @@ int main() {
     VGA_BASE->FRAME_BASE = (uint32_t)vgaFramebuffer;
     vga_run(VGA_BASE);
 
-    uint32_t offset = 0;
+    uint16_t offset = 0;
     while(1){
     	uint16_t *ptr = &vgaFramebuffer[0][0];
     	for(uint32_t y = 0;y < RES_Y;y++){
-    		uint16_t c = ((y & 0x1F) << 6) + (offset << 11);
+    		uint16_t c = (((y + offset) & 0x1F) << 6);
         	for(uint32_t x = 0;x < RES_X;x++){
         		*ptr = ((uint16_t)(x & 0x1F)) + c;
         		ptr++;
         	}
     	}
-    	offset = ~offset;
+    	offset+=4;
     	flushDataCache(0);
     	uart_write(UART, '\n');
     }
