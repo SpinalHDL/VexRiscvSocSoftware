@@ -19,7 +19,7 @@ RISCV_OBJDUMP = $(RISCV_PATH)/bin/$(RISCV_NAME)-objdump
 RISCV_CC=$(RISCV_PATH)/bin/$(RISCV_NAME)-gcc
 
 CFLAGS +=   -static -fstrict-volatile-bitfields
-LDFLAGS += -e_start  -nostartfiles -T $(LDSCRIPT) -Wl,-Map,$(OBJDIR)/$(PROJ_NAME).map
+LDFLAGS += -e_start  -nostartfiles -T $(LDSCRIPT) -Wl,-Map,$(OBJDIR)/$(PROJ_NAME).map -Wl,--print-memory-usag
 LDFLAGS += $(RISCV_CLIB)/libc.a $(RISCV_CLIB)/libnosys.a
 
 OBJDIR = build
