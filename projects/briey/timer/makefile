@@ -10,8 +10,9 @@ SRCS = 	$(wildcard src/*.c) \
 	    
 	    
 
-LDSCRIPT = ../../../resources/linker.ld
+LDSCRIPT = ../libs/linker.ld
 INC += -I../../../libs/
+INC += -I../libs/
 
 include ../../../resources/gcc.mk
 include ../../../resources/subproject.mk

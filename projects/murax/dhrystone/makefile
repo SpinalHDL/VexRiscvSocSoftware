@@ -1,11 +1,7 @@
 PROJ_NAME=dhrystone
-DEBUG=yes
+DEBUG=no
 BENCH=yes
-MULDIV=yes
-MMU?=no
-ifeq ($(MMU),yes)
-	CFLAGS += -DMMU
-endif
+MULDIV=no
 
 
 
@@ -20,7 +16,8 @@ SRCS = 	$(wildcard src/*.c) \
 				$(wildcard src/*.S)
 
 INC += -I../../../libs/
-LDSCRIPT = ../../../resources/linker.ld
+INC += -I../libs/
+LDSCRIPT = linker.ld
 
 
 include ../../../resources/gcc.mk

@@ -1,7 +1,11 @@
-PROJ_NAME=murazDhrystone
-DEBUG=no
+PROJ_NAME=dhrystone
+DEBUG=yes
 BENCH=yes
-MULDIV=no
+MULDIV=yes
+MMU?=no
+ifeq ($(MMU),yes)
+	CFLAGS += -DMMU
+endif
 
 
 
@@ -15,8 +19,9 @@ SRCS = 	$(wildcard src/*.c) \
 				$(wildcard src/*.cpp)  \
 				$(wildcard src/*.S)
 
+LDSCRIPT = ../libs/linker.ld
 INC += -I../../../libs/
-LDSCRIPT = linker.ld
+INC += -I../libs/
 
 
 include ../../../resources/gcc.mk

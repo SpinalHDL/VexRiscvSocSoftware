@@ -12,8 +12,10 @@ SRCS = 	$(wildcard src/*.c) \
 	$(wildcard src/*.cpp)  \
 	$(wildcard src/*.S)
 
-LDSCRIPT = ../../../resources/linker.ld
+
+LDSCRIPT = ../libs/linker.ld
 INC += -I../../../libs/
+INC += -I../libs/
 
 include ../../../resources/gcc.mk
 include ../../../resources/subproject.mk
