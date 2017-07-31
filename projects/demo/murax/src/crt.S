@@ -104,20 +104,6 @@ bss_loop:
   j bss_loop
 bss_done:
 
-/*
-data_init:
-  la a0, _sdata
-  la a1, _edata
-  la a2, _copy_section
-data_loop:
-  beq a0,a1,data_done
-  lw a3,0(a2)
-  sw a3,0(a0)
-  add a2,a2,4
-  add a0,a0,4
-  j data_loop
-data_done:*/
-
 ctors_init:
   la a0, _ctors_start
   addi sp,sp,-4
@@ -134,10 +120,10 @@ ctors_done:
   addi sp,sp,4
 
 
-  li a0, 0x008
-  csrw mstatus,a0
-  li a0, 0x080
+  li a0, 0x880     //880 enable timer + external interrupts
   csrw mie,a0
+  li a0, 0x008     //008 enable interrupts
+  csrw mstatus,a0
 
   call main
 infinitLoop:

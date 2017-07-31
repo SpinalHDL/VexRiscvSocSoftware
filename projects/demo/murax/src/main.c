@@ -6,7 +6,7 @@
 #include "gpio.h"
 #include "uart.h"
 
-#define GPIO_A_BASE    ((Gpio_Reg*)(0xF0000000))
+#define GPIO_A    ((Gpio_Reg*)(0xF0000000))
 #define TIMER_PRESCALER ((Prescaler_Reg*)0xF0020000)
 #define TIMER_INTERRUPT ((InterruptCtrl_Reg*)0xF0020010)
 #define TIMER_A ((Timer_Reg*)0xF0020040)
@@ -27,33 +27,35 @@ int main() {
 
 	TIMER_PRESCALER->LIMIT = 12000-1; //1 ms rate
 
-	TIMER_A->LIMIT = 100-1;
+	TIMER_A->LIMIT = 1000-1;  //1 second rate
 	TIMER_A->CLEARS_TICKS = 0x00010002;
 
 	TIMER_INTERRUPT->PENDINGS = 0xF;
 	TIMER_INTERRUPT->MASKS = 0x1;
 
-	GPIO_A_BASE->OUTPUT_ENABLE = 0x000000FF;
-	GPIO_A_BASE->OUTPUT = 0x00000000;
+	GPIO_A->OUTPUT_ENABLE = 0x000000FF;
+	GPIO_A->OUTPUT = 0x00000000;
 
-	UART->DATA = 'i';
+	UART->STATUS = 2; //Enable RX interrupts
+	UART->DATA = 'A';
 
 	while(result < 0xF0000000){
-		UART->DATA = 'a';
 		result += a;
 		result += b + c;
-		for(uint32_t idx = 0;idx < 50000;idx++){
-			asm("nop");
-		}
-		GPIO_A_BASE->OUTPUT = (GPIO_A_BASE->OUTPUT & ~0x3F) | ((GPIO_A_BASE->OUTPUT + 1) & 0x3F);
+		for(uint32_t idx = 0;idx < 50000;idx++) asm volatile("");
+		GPIO_A->OUTPUT = (GPIO_A->OUTPUT & ~0x3F) | ((GPIO_A->OUTPUT + 1) & 0x3F);  //Counter on LED[5:0]
 	}
 	return result;
 }
 
 void irq(){
-
-	GPIO_A_BASE->OUTPUT ^= 0x80;
-	TIMER_INTERRUPT->PENDINGS = 1;
+	if(TIMER_INTERRUPT->PENDINGS & 1){  //Timer A interrupt
+		GPIO_A->OUTPUT ^= 0x80; //Toogle led 7
+		TIMER_INTERRUPT->PENDINGS = 1;
+	}
+	while(UART->STATUS & (1 << 9)){ //UART RX interrupt
+		UART->DATA = (UART->DATA) & 0xFF;
+	}
 }
 
 
