@@ -3,7 +3,7 @@
 #include <murax.h>
 
 
-int main() {
+void main() {
 	volatile uint32_t a = 1, b = 2, c = 3;
 	uint32_t result = 0;
 
@@ -25,13 +25,12 @@ int main() {
 	UART->STATUS = 2; //Enable RX interrupts
 	UART->DATA = 'A';
 
-	while(result < 0xF0000000){
+	while(1){
 		result += a;
 		result += b + c;
 		for(uint32_t idx = 0;idx < 50000;idx++) asm volatile("");
 		GPIO_A->OUTPUT = (GPIO_A->OUTPUT & ~0x3F) | ((GPIO_A->OUTPUT + 1) & 0x3F);  //Counter on LED[5:0]
 	}
-	return result;
 }
 
 void irq(){
