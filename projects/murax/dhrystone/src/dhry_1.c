@@ -205,6 +205,9 @@ main2 ()
 #ifdef MSC_CLOCK
   End_Time = clock();
 #endif
+  //Adjust with timerA prescaler
+  End_Time *= 100;
+  Begin_Time *= 100;
 
   printf ("Execution ends\n");
   printf ("\n");
@@ -285,6 +288,8 @@ main2 ()
     printf ("%6.1f \n", Microseconds);
     printf ("Dhrystones per Second:                      ");
     printf ("%6.1f \n", Dhrystones_Per_Second);
+    printf ("DMIPS per Mhz:                              ");
+    printf ("%6.3f \n", (1e6f/1757.0f) * Number_Of_Runs / User_Time);
     printf ("\n");
   }
   

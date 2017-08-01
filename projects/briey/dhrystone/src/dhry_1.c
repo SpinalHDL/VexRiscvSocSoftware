@@ -285,6 +285,8 @@ main2 ()
     printf ("%6.1f \n", Microseconds);
     printf ("Dhrystones per Second:                      ");
     printf ("%6.1f \n", Dhrystones_Per_Second);
+    printf ("DMIPS per Mhz:                              ");
+    printf ("%6.3f \n", (1e6f/1757.0f) * Number_Of_Runs / User_Time);
     printf ("\n");
   }
   
