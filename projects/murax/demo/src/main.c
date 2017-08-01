@@ -3,8 +3,6 @@
 #include <murax.h>
 
 
-
-
 int main() {
 	volatile uint32_t a = 1, b = 2, c = 3;
 	uint32_t result = 0;
