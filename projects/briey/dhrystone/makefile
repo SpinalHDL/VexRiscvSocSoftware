@@ -1,5 +1,5 @@
 PROJ_NAME=dhrystone
-DEBUG=yes
+DEBUG=no
 BENCH=yes
 MULDIV=yes
 MMU?=no
