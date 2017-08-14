@@ -1,5 +1,5 @@
 RISCV_NAME ?= riscv64-unknown-elf
-RISCV_PATH ?= /opt/rv/
+RISCV_PATH ?= /opt/riscv/
 RISCV_MULTI_TARGET_PACK ?= yes
 
 ifeq ($(MULDIV),yes)
