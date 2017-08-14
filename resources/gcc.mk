@@ -1,14 +1,15 @@
-RISCV_NAME = riscv32-unknown-elf
+RISCV_NAME ?= riscv64-unknown-elf
+RISCV_PATH ?= /opt/rv/
+RISCV_MULTI_TARGET_PACK ?= yes
 
 ifeq ($(MULDIV),yes)
-	CFLAGS += -march=rv32im  -mabi=ilp32
-	LDFLAGS += -march=rv32im  -mabi=ilp32
-	RISCV_PATH=/opt/rv32im/
+	MARCH=rv32im
+	MABI=ilp32
 endif
 ifeq ($(MULDIV),no)
-	CFLAGS += -march=rv32i   -mabi=ilp32
-	LDFLAGS += -march=rv32i  -mabi=ilp32
-	RISCV_PATH=/opt/rv32i/
+	MARCH=rv32i
+	MABI=ilp32
 endif
 
-
+CFLAGS += -march=$(MARCH)  -mabi=$(MABI)
+LDFLAGS += -march=$(MARCH)  -mabi=$(MABI)

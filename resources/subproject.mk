@@ -12,8 +12,16 @@ ifeq ($(BENCH),yes)
 	CFLAGS += -fno-inline  
 endif
 
+ifeq ($(RISCV_MULTI_TARGET_PACK),yes)
+	RISCV_CLIB=$(RISCV_PATH)$(RISCV_NAME)/lib/$(MARCH)/$(MABI)/
+else
+	RISCV_CLIB=$(RISCV_PATH)$(RISCV_NAME)/lib/
+endif
 
-RISCV_CLIB=$(RISCV_PATH)$(RISCV_NAME)/lib/
+
+
+
+
 RISCV_OBJCOPY = $(RISCV_PATH)/bin/$(RISCV_NAME)-objcopy
 RISCV_OBJDUMP = $(RISCV_PATH)/bin/$(RISCV_NAME)-objdump
 RISCV_CC=$(RISCV_PATH)/bin/$(RISCV_NAME)-gcc
