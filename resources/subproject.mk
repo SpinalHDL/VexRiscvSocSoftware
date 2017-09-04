@@ -13,9 +13,9 @@ ifeq ($(BENCH),yes)
 endif
 
 ifeq ($(RISCV_MULTI_TARGET_PACK),yes)
-	RISCV_CLIB=$(RISCV_PATH)$(RISCV_NAME)/lib/$(MARCH)/$(MABI)/
+	RISCV_CLIB=$(RISCV_PATH)/$(RISCV_NAME)/lib/$(MARCH)/$(MABI)/
 else
-	RISCV_CLIB=$(RISCV_PATH)$(RISCV_NAME)/lib/
+	RISCV_CLIB=$(RISCV_PATH)/$(RISCV_NAME)/lib/
 endif
 
 
