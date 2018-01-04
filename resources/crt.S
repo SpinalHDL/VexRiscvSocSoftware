@@ -136,7 +136,7 @@ ctors_done:
 
   li a0, 0x008
   csrw mstatus,a0
-  li a0, 0x080
+  li a0, 0x1880
   csrw mie,a0
 
   call main
