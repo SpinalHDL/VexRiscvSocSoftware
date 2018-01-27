@@ -12,7 +12,7 @@ ifeq ($(BENCH),yes)
 	CFLAGS += -fno-inline  
 endif
 
-ifeq ($(RISCV_MULTI_TARGET_PACK),yes)
+ifeq ($(SIFIVE_GCC_PACK),yes)
 	RISCV_CLIB=$(RISCV_PATH)/$(RISCV_NAME)/lib/$(MARCH)/$(MABI)/
 else
 	RISCV_CLIB=$(RISCV_PATH)/$(RISCV_NAME)/lib/
