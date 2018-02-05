@@ -20,7 +20,7 @@ int main() {
 }
 
 
-void irq(){
+void irqCallback(){
 	TIMER_INTERRUPT->PENDINGS = 1;
 }
 

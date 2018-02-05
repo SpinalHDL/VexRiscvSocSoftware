@@ -1,5 +1,5 @@
 # Set it to yes if you are using the sifive precompiled GCC pack
-SIFIVE_GCC_PACK ?= no
+SIFIVE_GCC_PACK ?= yes
 
 ifeq ($(SIFIVE_GCC_PACK),yes)
 	RISCV_NAME ?= riscv64-unknown-elf

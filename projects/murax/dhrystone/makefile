@@ -1,19 +1,18 @@
 PROJ_NAME=dhrystone
 DEBUG=no
-BENCH=yes
+BENCH=no
 MULDIV=no
 
 
 
-CFLAGS += -g -std=gnu99 -ffast-math -fno-common -funsigned-char -fno-inline -fno-builtin-printf 
+CFLAGS += -fno-inline -fno-common 
 LDFLAGS += -lc
 
 CFLAGS +=  -DPREALLOCATE=1 -DHOST_DEBUG=0 -DMSC_CLOCK 
 
 
-SRCS = 	$(wildcard src/*.c) \
-				$(wildcard src/*.cpp)  \
-				$(wildcard src/*.S)
+SRCS = 	src/main.c src/dhry_1.c src/dhry_2.c src/crt.S  src/stdlib.c 
+LDFLAGS += -lc #Used to get memcpy/strcmp stuff only
 
 INC += -I../../../libs/
 INC += -I../libs/

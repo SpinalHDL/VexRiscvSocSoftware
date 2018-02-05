@@ -1,98 +1,81 @@
-/*======================================================================*/
-/* Proxy kernel linker script                                           */
-/*======================================================================*/
-/* This is the linker script used when building the proxy kernel. */
+/*
+This is free and unencumbered software released into the public domain.
 
-/*----------------------------------------------------------------------*/
-/* Setup                                                                */
-/*----------------------------------------------------------------------*/
-
-/* The OUTPUT_ARCH command specifies the machine architecture where the
-   argument is one of the names used in the BFD library. More
-   specifically one of the entires in bfd/cpu-mips.c */
-
-OUTPUT_ARCH( "riscv" )
-
-/*----------------------------------------------------------------------*/
-/* Sections                                                             */
-/*----------------------------------------------------------------------*/
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+*/
+OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv", "elf32-littleriscv")
+OUTPUT_ARCH(riscv)
+ENTRY(crtStart)
 
 MEMORY {
-  onChipRam (W!RX)/*(RX)*/ : ORIGIN = 0x00000000, LENGTH = 256K
+  onChipRam : ORIGIN = 0x80000000, LENGTH = 256k
 }
-_stack_size = 4096;
-_heap_size = 8192;
 
-SECTIONS /*TODO don't initialize useless things,  restore literal loading that use 2 instruction in place of onChipRam word */
-{
+_stack_size = DEFINED(_stack_size) ? _stack_size : 1024;
+_heap_size = DEFINED(_heap_size) ? _heap_size : 0;
 
+SECTIONS {
 
-   /* text: test code section */
-   . = 0x000;
-   
-   .yolo :
-   {
-    . = ALIGN(4);
-    *crt.o(.text)
-   } > onChipRam
-   
-   .text :
-   {
-    _text = .;
-    PROVIDE(stext = .);
-    KEEP(*(.isr_vector))
-    *(.text .text.*)            
-    *(.rodata .rodata.*)        
-    *(.srodata .srodata.*)         
-    *(.eh_frame)       
-    *(.gnu.linkonce.t.*)
-    *(.glue_7)
-    *(.glue_7t)
-    *(.gcc_except_table)
+  .vector : {
+    *crt.o(.text);
+  } > onChipRam
+
+  .memory : {
+    *(.text);
+    end = .;
+  } > onChipRam
+
+  .rodata         :
+  {
+    *(.rdata)
+    *(.rodata .rodata.*)
     *(.gnu.linkonce.r.*)
-    . = ALIGN(4);
-    _etext = .;
-    _sidata = _etext;
-    PROVIDE(etext = .);   
-     _fini = . ;
-    *(.fini)  
-   } > onChipRam
+  } > onChipRam
 
-  /* .ctors => Contains a list of global constructor pointers */
-  .ctors  : {
+  .ctors          :
+  {
     . = ALIGN(4);
-    _ctors_load_start = .;
     _ctors_start = .;
     KEEP(*(.init_array*))
     KEEP (*(SORT(.ctors.*)))
     KEEP (*(.ctors))
+    . = ALIGN(4);
+    _ctors_end = .;
   } > onChipRam
-  _ctors_end = _ctors_start + SIZEOF(.ctors);
-  
-  _copy_section = _ctors_start + SIZEOF(.ctors);
-   .data : /*AT (_copy_section)*/ /* ADDR(.text) + SIZEOF ( .text )     AT (_etext) */
-   {
-      . = ALIGN(4);
-      _sdata = .;
-      *(.ramfunc .ramfunc.* .fastrun .fastrun.*)
-      *(.data .data.*)
-      *(.sdata .sdata.*)
-      *(.gnu.linkonce.d.*)
-      . = ALIGN(4);
-      _edata = .;
-   } > onChipRam
 
+  .data          :
+  {
+    *(.rdata)
+    *(.rodata .rodata.*)
+    *(.gnu.linkonce.r.*)
+    *(.data .data.*)
+    *(.gnu.linkonce.d.*)
+    . = ALIGN(8);
+    PROVIDE( __global_pointer$ = . + 0x800 );
+    *(.sdata .sdata.*)
+    *(.gnu.linkonce.s.*)
+    . = ALIGN(8);
+    *(.srodata.cst16)
+    *(.srodata.cst8)
+    *(.srodata.cst4)
+    *(.srodata.cst2)
+    *(.srodata .srodata.*)
+  } > onChipRam
 
   .bss (NOLOAD) : {
-  . = ALIGN(4);
-      /* This is used by the startup in order to initialize the .bss secion */
-      _bss_start = .;
-      *(.sbss .sbss.*)
-      *(.bss .bss.*)
-      *(.gnu.linkonce.b.*)
-      *(COMMON)
-      . = ALIGN(4);        
-      _bss_end = .;
+		. = ALIGN(4);
+		/* This is used by the startup in order to initialize the .bss secion */
+		_bss_start = .;
+    *(.sbss*)
+    *(.gnu.linkonce.sb.*)
+    *(.bss .bss.*)
+    *(.gnu.linkonce.b.*)
+    *(COMMON)
+		. = ALIGN(4);        
+		_bss_end = .;
   } > onChipRam
   
   .noinit (NOLOAD) : {
@@ -122,5 +105,5 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     PROVIDE (_stack_start = .);
   } > onChipRam
 
-
 }
+

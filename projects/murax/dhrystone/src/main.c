@@ -2,12 +2,8 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <uartStdIo.h>
 #include <murax.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 extern void main2();
 
@@ -33,22 +29,14 @@ int main() {
 }
 
 
-void irq(){
+void irqCallback(){
 
 }
 
-
-int     times (){
-  return TIMER_A->VALUE;
-}
 #include <time.h>
 clock_t	clock(){
-  return times();
+	return TIMER_A->VALUE;
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 
 

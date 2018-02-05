@@ -269,7 +269,7 @@ main2 ()
   }
   else
   {
-    printf ("User_Time=%d \n", User_Time);
+	printf ("Clock cycles=%d \n", User_Time);
 
 #ifdef TIME
     Microseconds = (float) User_Time * Mic_secs_Per_Second 
@@ -281,12 +281,13 @@ main2 ()
     Dhrystones_Per_Second = ((float) CORE_HZ * (float) Number_Of_Runs)
                         / (float) User_Time;
 #endif
-    printf ("Microseconds for one run through Dhrystone: ");
-    printf ("%6.1f \n", Microseconds);
-    printf ("Dhrystones per Second:                      ");
-    printf ("%6.1f \n", Dhrystones_Per_Second);
     printf ("DMIPS per Mhz:                              ");
-    printf ("%6.3f \n", (1e6f/1757.0f) * Number_Of_Runs / User_Time);
+    float dmips = (1e6f/1757.0f) * Number_Of_Runs / User_Time;
+    int dmipsNatural = dmips;
+    int dmipsReal = (dmips - dmipsNatural)*100.0f;
+    printf ("%d.", dmipsNatural);
+    if(dmipsReal < 10) printf("0");
+    printf ("%d", dmipsReal);
     printf ("\n");
   }
   

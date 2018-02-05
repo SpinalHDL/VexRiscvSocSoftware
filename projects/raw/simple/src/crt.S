@@ -54,10 +54,10 @@ trap_entry:
 
 
 crtInit:
-  .option push
+ /* .option push
   .option norelax
   la gp, __global_pointer$
-  .option pop
+  .option pop*/
   la sp, _stack_start
 
 bss_init:
@@ -94,4 +94,5 @@ ctors_done:
   call main
 infinitLoop:
   j infinitLoop
+
 

@@ -33,7 +33,7 @@ void main() {
 	}
 }
 
-void irq(){
+void irqCallback(){
 	if(TIMER_INTERRUPT->PENDINGS & 1){  //Timer A interrupt
 		GPIO_A->OUTPUT ^= 0x80; //Toogle led 7
 		TIMER_INTERRUPT->PENDINGS = 1;

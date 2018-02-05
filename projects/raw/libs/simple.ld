@@ -1,16 +1,3 @@
-/*======================================================================*/
-/* Proxy kernel linker script                                           */
-/*======================================================================*/
-/* This is the linker script used when building the proxy kernel. */
-
-/*----------------------------------------------------------------------*/
-/* Setup                                                                */
-/*----------------------------------------------------------------------*/
-
-/* The OUTPUT_ARCH command specifies the machine architecture where the
-   argument is one of the names used in the BFD library. More
-   specifically one of the entires in bfd/cpu-mips.c */
-
 /*
 This is free and unencumbered software released into the public domain.
 
@@ -24,29 +11,29 @@ OUTPUT_ARCH(riscv)
 ENTRY(crtStart)
 
 MEMORY {
-  onChipRam (W!RX)/*(RX)*/ : ORIGIN = 0x80000000, LENGTH = 4K
-  sdram (W!RX) : ORIGIN = 0x40000000, LENGTH = 64M
+  mem : ORIGIN = 0x80000000, LENGTH = 0x00040000
 }
-_stack_size = 2k;
-_heap_size = 0k;
 
-SECTIONS /*TODO don't initialize useless things,  restore literal loading that use 2 instruction in place of onChipRam word */
-{
+_stack_size = DEFINED(_stack_size) ? _stack_size : 1K;
+_heap_size = DEFINED(_heap_size) ? _heap_size : 0K;
+
+SECTIONS {
+
   .vector : {
     *crt.o(.text);
-  } > onChipRam
+  } > mem
 
   .memory : {
     *(.text);
     end = .;
-  } > sdram
+  } > mem
 
   .rodata         :
   {
     *(.rdata)
     *(.rodata .rodata.*)
     *(.gnu.linkonce.r.*)
-  } > sdram
+  } > mem
 
   .ctors          :
   {
@@ -57,7 +44,7 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     KEEP (*(.ctors))
     . = ALIGN(4);
     _ctors_end = .;
-  } > sdram
+  } > mem
 
   .data          :
   {
@@ -76,7 +63,7 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     *(.srodata.cst4)
     *(.srodata.cst2)
     *(.srodata .srodata.*)
-  } > sdram
+  } > mem
 
   .bss (NOLOAD) : {
 		. = ALIGN(4);
@@ -89,13 +76,13 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     *(COMMON)
 		. = ALIGN(4);        
 		_bss_end = .;
-  } > sdram
+  } > mem
   
   .noinit (NOLOAD) : {
       . = ALIGN(4);
       *(.noinit .noinit.*)
       . = ALIGN(4);    
-  } > sdram
+  } > mem
 
 
   ._user_heap (NOLOAD):
@@ -107,7 +94,7 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     . = . + _heap_size;
     . = ALIGN(8);
     PROVIDE ( _heap_end = .);
-  } > sdram
+  } > mem
   
   ._stack (NOLOAD):
   {
@@ -116,7 +103,7 @@ SECTIONS /*TODO don't initialize useless things,  restore literal loading that u
     . = . + _stack_size;
     . = ALIGN(16);
     PROVIDE (_stack_start = .);
-  } > onChipRam
-
+  } > mem
 
 }
+

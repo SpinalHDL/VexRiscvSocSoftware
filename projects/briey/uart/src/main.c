@@ -34,4 +34,6 @@ int main() {
 }
 
 
+void irqCallback(){
 
+}

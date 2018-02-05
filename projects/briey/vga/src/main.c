@@ -50,7 +50,7 @@ int main() {
 }
 
 
-void irq(){
+void irqCallback(){
 
 }
 

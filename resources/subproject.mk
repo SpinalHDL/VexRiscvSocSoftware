@@ -1,11 +1,11 @@
 
 
 ifeq ($(DEBUG),yes)
-	CFLAGS +=-g3 -O0 
+	CFLAGS += -g3 -O0 
 endif
 
 ifeq ($(DEBUG),no)
-	CFLAGS +=-O3 
+	CFLAGS += -g -O3 
 endif
 
 ifeq ($(BENCH),yes)
@@ -26,9 +26,9 @@ RISCV_OBJCOPY = $(RISCV_PATH)/bin/$(RISCV_NAME)-objcopy
 RISCV_OBJDUMP = $(RISCV_PATH)/bin/$(RISCV_NAME)-objdump
 RISCV_CC=$(RISCV_PATH)/bin/$(RISCV_NAME)-gcc
 
-CFLAGS +=   -static -fstrict-volatile-bitfields
-LDFLAGS += -e_start  -nostartfiles -T $(LDSCRIPT) -Wl,-Map,$(OBJDIR)/$(PROJ_NAME).map -Wl,--print-memory-usag
-LDFLAGS += $(RISCV_CLIB)/libc.a $(RISCV_CLIB)/libnosys.a
+CFLAGS +=  -MD -fstrict-volatile-bitfields 
+LDFLAGS +=  -nostdlib -lgcc -mcmodel=medany -nostartfiles -ffreestanding -Wl,-Bstatic,-T,$(LDSCRIPT),-Map,$(OBJDIR)/$(PROJ_NAME).map,--print-memory-usag
+#LDFLAGS += -lgcc -lc -lg -nostdlib  -lgcc  -msave-restore    --strip-debug, 
 
 OBJDIR = build
 OBJS := $(SRCS)

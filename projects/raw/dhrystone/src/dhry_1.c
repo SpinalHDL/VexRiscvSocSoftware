@@ -14,7 +14,6 @@
  *
  ****************************************************************************
  */
-//#pragma GCC optimize ("no-inline")
 #include "dhry.h"
 
 /* Global Variables: */
@@ -205,9 +204,6 @@ main2 ()
 #ifdef MSC_CLOCK
   End_Time = clock();
 #endif
-  //Adjust with timerA prescaler
-  End_Time *= 100;
-  Begin_Time *= 100;
 
   printf ("Execution ends\n");
   printf ("\n");
@@ -272,7 +268,7 @@ main2 ()
   }
   else
   {
-	printf ("Clock cycles=%d \n", User_Time);
+    printf ("Clock cycles=%d \n", User_Time);
 
 #ifdef TIME
     Microseconds = (float) User_Time * Mic_secs_Per_Second 
@@ -284,6 +280,7 @@ main2 ()
     Dhrystones_Per_Second = ((float) CORE_HZ * (float) Number_Of_Runs)
                         / (float) User_Time;
 #endif
+
     printf ("DMIPS per Mhz:                              ");
     float dmips = (1e6f/1757.0f) * Number_Of_Runs / User_Time;
     int dmipsNatural = dmips;

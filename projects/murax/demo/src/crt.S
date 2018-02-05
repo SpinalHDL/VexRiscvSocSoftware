@@ -1,4 +1,9 @@
-  j _start
+.global crtStart
+.global main
+.global irqCallback
+
+crtStart:
+  j crtInit
   nop
   nop
   nop
@@ -26,7 +31,7 @@ trap_entry:
   sw x30, -15*4(sp)
   sw x31, -16*4(sp)
   addi sp,sp,-16*4
-  call irq
+  call irqCallback
   lw x1 , 15*4(sp)
   lw x5,  14*4(sp)
   lw x6,  13*4(sp)
@@ -48,21 +53,12 @@ trap_entry:
   .text
 
 
-  .globl _start
-_start:
-
+crtInit:
+  .option push
+  .option norelax
+  la gp, __global_pointer$
+  .option pop
   la sp, _stack_start
-
-test_init:
-  li a0, 20
-test_loop:
-  nop
-  nop
-  nop
-  addi a0, a0, -1
-  bne a0,x0,test_loop
-test_done:
-
 
 bss_init:
   la a0, _bss_start
@@ -88,6 +84,7 @@ ctors_loop:
   j ctors_loop
 ctors_done:
   addi sp,sp,4
+
 
   li a0, 0x880     //880 enable timer + external interrupts
   csrw mie,a0
