@@ -13,13 +13,13 @@ else
 	endif
 endif
 
+MABI=ilp32
+MARCH := rv32i
 ifeq ($(MULDIV),yes)
-	MARCH=rv32im
-	MABI=ilp32
+	MARCH := $(MARCH)m
 endif
-ifeq ($(MULDIV),no)
-	MARCH=rv32i
-	MABI=ilp32
+ifeq ($(COMPRESSED),yes)
+	MARCH := $(MARCH)c
 endif
 
 CFLAGS += -march=$(MARCH)  -mabi=$(MABI)

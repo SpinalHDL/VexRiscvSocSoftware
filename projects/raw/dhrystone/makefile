@@ -2,6 +2,7 @@ PROJ_NAME=dhrystone
 DEBUG=no
 BENCH=no
 MULDIV?=yes
+COMPRESSED?=yes
 
 
 CFLAGS += -fno-inline -fno-common 
