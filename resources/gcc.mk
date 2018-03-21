@@ -19,7 +19,7 @@ ifeq ($(MULDIV),yes)
 	MARCH := $(MARCH)m
 endif
 ifeq ($(COMPRESSED),yes)
-	MARCH := $(MARCH)c
+	MARCH := $(MARCH)ac
 endif
 
 CFLAGS += -march=$(MARCH)  -mabi=$(MABI)
