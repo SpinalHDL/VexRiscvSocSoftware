@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations":
+    [
+        {
+            "name": "riscv64-unknown-elf-gdb",
+            "type": "cppdbg",
+            "request": "launch",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/opt/riscv/bin/riscv64-unknown-elf-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "stopAtEntry": true,
+            //"preLaunchTask": "make",
+            "preLaunchTask": null,
+            "program": "${workspaceFolder}/build/democ.elf",
+            "args": [],
+            "environment": [],
+            "cwd": "${workspaceRoot}/build",
+            "externalConsole": true,
+            "setupCommands":
+            [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
