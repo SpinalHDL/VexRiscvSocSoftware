@@ -1,8 +1,8 @@
 PROJ_NAME=dhrystone
 DEBUG=no
 BENCH=no
-MULDIV?=yes
-COMPRESSED?=yes
+MULDIV?=no
+COMPRESSED?=no
 
 
 CFLAGS += -fno-inline -fno-common 
@@ -15,7 +15,7 @@ LDFLAGS += -lc #Used to get memcpy/strcmp stuff only
 LDSCRIPT = ../libs/simple.ld
 INC += -I../../../libs/
 INC += -I../libs/
-
+CFLAGS += -fstack-usage 
 
 include ../../../resources/gcc.mk
 include ../../../resources/subproject.mk

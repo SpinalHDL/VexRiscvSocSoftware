@@ -1,4 +1,4 @@
-PROJ_NAME=demo
+PROJ_NAME=demo_xip
 DEBUG=yes
 BENCH=no
 MULDIV=no
@@ -12,7 +12,7 @@ SRCS = 	$(wildcard src/*.c) \
 
 INC += -I../../../libs/
 INC += -I../libs/
-LDSCRIPT = ../libs/linker.ld
+LDSCRIPT = ../libs/linker_xip.ld
 
 include ../../../resources/gcc.mk
 include ../../../resources/subproject.mk
